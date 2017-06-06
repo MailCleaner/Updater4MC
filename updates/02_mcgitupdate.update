@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd "${SRCDIR}" && "${SRCDIR}/lib/updates/gitupdate.sh"
