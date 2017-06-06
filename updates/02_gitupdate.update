@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd "$rpath" && git fetch && git reset --hard @{u} && git pull

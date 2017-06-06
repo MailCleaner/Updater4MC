@@ -1,0 +1,7 @@
+#!/bin/bash
+
+function funthing
+{
+    echo "fun !"
+    return 0
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+"${SRCDIR}/install/install_perl_libs.sh"
