@@ -70,6 +70,8 @@ exec 2>&1
 
 echo "$(date +%F_%T) Launching Updater4MCBeta"
 
+cd "$rpath" && git fetch && git reset --hard @{u} && git pull
+
 [ ! -d "${VARDIR}/spool/updater" ] && mkdir "${VARDIR}/spool/updater"
 
 for updtlib in $(find $rpath"/libs" -type f -name "*.lib" |sort |uniq)
