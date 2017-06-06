@@ -65,7 +65,7 @@ echo "Launching Updater4MCBeta"
 realpath rpath "$0"
 
 # Enabling copy output and error to logs
-exec > >(tee -i "${rpath}/updater_$(date +%F).log")
+exec > >(tee -ai "${rpath}/updater_$(date +%F).log")
 exec 2>&1
 
 [ ! -d "${VARDIR}/spool/updater" ] && mkdir "${VARDIR}/spool/updater"
