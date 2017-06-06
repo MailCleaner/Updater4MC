@@ -25,6 +25,8 @@
 
 CONFFILE=/etc/mailcleaner.conf
 
+[ ! -f "$CONFFILE" ] && echo "Not a valid MailCleaner Installation: no conf file" && exit 1
+
 HOSTID=`grep 'HOSTID' $CONFFILE | cut -d ' ' -f3`
 if [ "$HOSTID" = "" ]; then
   HOSTID=1
