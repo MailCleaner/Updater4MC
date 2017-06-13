@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd "${SRCDIR}" && "${SRCDIR}/lib/updates/gitupdate.sh"
-"${SRCDIR}/etc/init.d/mailcleaner restart"
+"${SRCDIR}/etc/init.d/mailcleaner" restart
