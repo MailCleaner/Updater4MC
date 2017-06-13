@@ -98,7 +98,7 @@ do
 	echo "Already updated: $updtfile ..."
     fi
 done
-"${rpath}/updates/tolaunch.always"
+. "${rpath}/updates/tolaunch.always"
 echo
 echo "$(date +%F_%T) End of Updater4MCBeta:"
 echo ">> All updates done ! Follow forum announces or relaunch this script regularly."
