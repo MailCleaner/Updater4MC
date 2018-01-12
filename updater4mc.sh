@@ -20,7 +20,7 @@
 #   This script allow to update MailCleaner from an external source
 #
 #   Usage:
-#           ./updater4mc.sh
+#           ./updater4mc.sh [--noreboot]
 #
 
 CONFFILE=/etc/mailcleaner.conf
@@ -98,7 +98,7 @@ do
 	echo "Already updated: $updtfile ..."
     fi
 done
-. "${rpath}/updates/tolaunch.always"
+. "${rpath}/updates/tolaunch.always" $1
 echo
 echo "$(date +%F_%T) End of Updater4MC:"
 echo ">> All updates done ! Follow forum announces or relaunch this script regularly."
