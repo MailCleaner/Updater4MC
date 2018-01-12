@@ -1,0 +1,3 @@
+#!/bin/bash
+
+touch "/var/run/updater4mc-ran"
