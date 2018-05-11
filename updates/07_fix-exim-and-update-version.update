@@ -16,4 +16,7 @@ ${SRCDIR}/etc/init.d/mailcleaner start
 
 # Update version and patch level
 echo "2018.03" > ${SRCDIR}/etc/mailcleaner/version.def
-echo "insert into update_patch (id, date, time, status, description) values ( 2018032201, '2018-03-22', '12:00:00', 'OK', '2018.03 migrated to Jessie' )" | ${SRCDIR}/bin/mc_mysql -s mc_config
+version_id=2018032201
+if [[ ($ISMASTER == "Y" || $ISMASTER == "y") && ! $(echo "select id from update_patch where id=$version_id" | ${SRCDIR}/bin/mc_mysql -s mc_config) ]]; then
+echo "insert into update_patch (id, date, time, status, description) values ( $version_id, '2018-03-22', '12:00:00', 'OK', '2018.03 migrated to Jessie' )" | ${SRCDIR}/bin/mc_mysql -s mc_config
+fi
