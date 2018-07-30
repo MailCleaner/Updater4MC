@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function check_db_schema {
+    table=$1
+    field=$2
+    value=$3
+
+    table_schema=$(echo "DESC ${table};" | ${SRCDIR}/bin/mc_mysql -m mc_config)
+    field_line=$(echo "${table_schema}" | grep -e "${field}")
+    value_check=$(echo "${field_line}" | grep -i -e "${value}")
+    if [[ -z "${value_check}" ]]; then
+        echo "There was an issue during the tables update, please contact your support"
+    fi
+}
