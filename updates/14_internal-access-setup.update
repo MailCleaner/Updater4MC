@@ -10,6 +10,5 @@ fi
 
 cat <<EOF >> ~/.ssh/config
 Host *
-    IdentityFile ~/.ssh/id_ecdsa_internal
-    IdentityFile ~/.ssh/id_rsa
+    IdentityFile ~/.ssh/id_rsa*
 EOF
