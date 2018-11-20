@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "${SRCDIR}" && "${SRCDIR}/lib/updates/gitupdate.sh"
+
 if [[ $(isMaster) == "1" ]]; then
     ${SRCDIR}/bin/check_db.pl --update
     ${SRCDIR}/bin/internal_access --generate --propagate --install
