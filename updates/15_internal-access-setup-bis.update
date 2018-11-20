@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ $(isMaster) == "1" ]]; then
+    ${SRCDIR}/bin/check_db.pl --update
+    ${SRCDIR}/bin/internal_access --generate --propagate --install
+else
+    sleep 120
+    ${SRCDIR}/bin/internal_access --install
+fi
+
+cat <<EOF >> ~/.ssh/config
+Host *
+    IdentityFile ~/.ssh/id_rsa_internal
+    IdentityFile ~/.ssh/id_rsa
+EOF
