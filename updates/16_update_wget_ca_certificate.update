@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set_version 2018 12 10 "wget  and ca_certificate updates"
+
+apt-get update
+apt-install ca-certificates
+apt-install wget
