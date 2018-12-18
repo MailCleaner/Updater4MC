@@ -1,6 +1,9 @@
 #!/bin/bash
 
-set_version 2018 12 10 "wget  and ca_certificate updates"
+export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
+export DEBIAN_FRONTEND=noninteractive
+
+set_version 2018 12 17 "wget  and ca_certificate updates"
 
 apt-get update
 apt-install ca-certificates
