@@ -41,6 +41,8 @@ if [ "$VARDIR" = "" ]; then
   VARDIR="/opt/mailcleaner"
 fi
 
+ISMASTER=$(grep 'ISMASTER' ${CONFFILE} | cut -d ' ' -f3)
+
 HTTPPROXY=`grep -e '^HTTPPROXY' $CONFFILE | cut -d ' ' -f3`
 export http_proxy=$HTTPPROXY
 
