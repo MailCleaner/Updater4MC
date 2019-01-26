@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $(isMaster) == "1" ]]; then
+if [[ ${ISMASTER} == "Y" ]]; then
     ${SRCDIR}/bin/check_db.pl --update
     ${SRCDIR}/bin/internal_access --generate --propagate --install
 else
