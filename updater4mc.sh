@@ -33,7 +33,7 @@ if [ "$HOSTID" = "" ]; then
 fi
 
 SRCDIR=`grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3`
-if [ "$SRCDIR" = "" ]; then 
+if [ "$SRCDIR" = "" ]; then
   SRCDIR="/opt/mailcleaner"
 fi
 VARDIR=`grep 'VARDIR' $CONFFILE | cut -d ' ' -f3`
@@ -73,6 +73,7 @@ exec 2>&1
 echo "$(date +%F_%T) Launching Updater4MC"
 
 cd "$rpath" && git fetch && git reset --hard @{u} && git pull
+cd "${SRCDIR}" && "${SRCDIR}/lib/updates/gitupdate.sh"
 
 [ ! -d "${VARDIR}/spool/updater" ] && mkdir "${VARDIR}/spool/updater"
 

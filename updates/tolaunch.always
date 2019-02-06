@@ -1,4 +1,3 @@
 #!/bin/bash
 
-cd "${SRCDIR}" && "${SRCDIR}/lib/updates/gitupdate.sh"
 [ "$1" != "--noreboot" ] && "${SRCDIR}/etc/init.d/mailcleaner" restart
