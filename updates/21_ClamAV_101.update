@@ -1,0 +1,16 @@
+apt-get update
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install mc-clamav
+
+sed -i 's/AlgorithmicDetection/HeuristicAlerts/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/DetectBrokenExecutables/AlertBrokenExecutables/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/PhishingAlwaysBlockCloak/AlertPhishingCloak/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/PhishingAlwaysBlockSSLMismatch/AlertPhishingSSLMismatch/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/PartitionIntersection/AlertPartitionIntersection/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/BlockMax/AlertExceedsMax/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/OLE2BlockMacros/AlertOLE2Macros/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/ArchiveBlockEncrypted/AlertEncrypted/' /usr/mailcleaner/etc/clamav/*
+sed -i 's/#ScanRAR/ScanRAR/' /usr/mailcleaner/etc/clamav/*
+
+sed -i 's/.*AllowSupplementaryGroups.*//' /usr/mailcleaner/etc/clamav/clamspamd.conf
+
+set_version 2019 05 19 "Last MailCleaner updates"
