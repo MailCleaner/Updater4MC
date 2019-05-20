@@ -14,7 +14,7 @@ if [[ $(dpkg -l |grep clamav |sed -e 's/.*0.101.2-1.*/0.101.2-1/') == '0.101.2-1
     sed -i 's/DetectBrokenExecutables/AlertBrokenExecutables/' /usr/mailcleaner/etc/clamav/*
     sed -i 's/PhishingAlwaysBlockCloak/AlertPhishingCloak/' /usr/mailcleaner/etc/clamav/*
     sed -i 's/PhishingAlwaysBlockSSLMismatch/AlertPhishingSSLMismatch/' /usr/mailcleaner/etc/clamav/*
-    sed -i 's/PartitionIntersection/AlertPartitionIntersection/' /usr/mailcleaner/etc/clamav/*
+    sed -i 's/[Alert]*PartitionIntersection/AlertPartitionIntersection/' /usr/mailcleaner/etc/clamav/*
     sed -i 's/BlockMax/AlertExceedsMax/' /usr/mailcleaner/etc/clamav/*
     sed -i 's/OLE2BlockMacros/AlertOLE2Macros/' /usr/mailcleaner/etc/clamav/*
     sed -i 's/ArchiveBlockEncrypted/AlertEncrypted/' /usr/mailcleaner/etc/clamav/*
