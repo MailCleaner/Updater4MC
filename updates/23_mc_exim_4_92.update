@@ -5,8 +5,8 @@ echo "Upgrading mc-exim package"
 export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get update >> ${FILE}
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install mc-exim >> ${FILE}
+apt-get update
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install mc-exim
 
 if [[ $(dpkg -l |grep mc-exim | sed -e 's/.*4.92.*/4.92/') == '4.92' ]]; then 
        sed -i 's/.*dmarc_ar_header.*/          add_header     = :at_start:${authresults {$primary_hostname}}/' /usr/mailcleaner/etc/exim/exim_stage1.conf_template
