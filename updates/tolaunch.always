@@ -1,3 +1,7 @@
 #!/bin/bash
 
 [ "$1" != "--noreboot" ] && "${SRCDIR}/etc/init.d/mailcleaner" restart
+
+/usr/mailcleaner/bin/check_db.pl -m --dbs=mc_config --update
+/usr/mailcleaner/bin/check_db.pl -s --dbs=mc_spool --update
+/usr/mailcleaner/bin/check_db.pl -s --dbs=mc_stats --update
