@@ -67,7 +67,7 @@ function realpath()
 realpath rpath "$0"
 
 # Enabling copy output and error to logs
-exec > >(tee -ai "${rpath}/updater_$(date +%F).log")
+exec > >(tee -ai "${VARDIR}/log/mailcleaner/updater4mc.log")
 exec 2>&1
 
 echo "$(date +%F_%T) Launching Updater4MC"
@@ -105,7 +105,7 @@ done
 echo
 echo "$(date +%F_%T) End of Updater4MC:"
 echo ">> All updates done ! Follow forum announces or relaunch this script regularly."
-echo ">> Logfile present here: ${rpath}/updater_$(date +%F).log"
+echo ">> Logfile present here: ${VARDIR}/log/mailcleaner/updater4mc.log"
 echo
 
 exit 0
