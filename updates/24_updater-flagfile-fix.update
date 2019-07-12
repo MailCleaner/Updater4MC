@@ -1,0 +1,9 @@
+#!/bin/bash
+
+CONFIGURATOR="/var/mailcleaner/run/configurator"
+if [ ! -d ${CONFIGURATOR} ]; then
+  mkdir ${CONFIGURATOR}
+  touch ${CONFIGURATOR}"/welcome"
+  chown -R mailcleaner:mailcleaner ${CONFIGURATOR}
+fi
+touch ${CONFIGURATOR}"/updater4mc-ran"
