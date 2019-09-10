@@ -29,6 +29,21 @@ else
 fi
 
 #Inserting jails into db
-echo 'INSERT INTO fail2ban_jail (name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count) VALUES ("mc_webauth",10,3600,86400,"80,443","mc-webauth-filter","mc-webauth-action","/var/mailcleaner/log/apache/mc_auth.log",3);' | mc_mysql -m mc_config
-echo 'INSERT INTO fail2ban_jail (name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count) VALUES ("mc_ssh",3,3600,86400,"22","sshd","mc-ssh-action","/var/log/auth.log",3);' | mc_mysql -m mc_config
-echo 'INSERT INTO fail2ban_jail (name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count) VALUES ("mc_exim",10,3600,86400,"25, 465, 587","mc-exim-filter","mc-exim-action","/var/mailcleaner/log/exim_stage1/rejectlog.0",3);' | mc_mysql -m mc_config
+echo 'INSERT INTO fail2ban_jail (name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count) VALUES ("mc_webauth",10,3600,86400,"80,443","mc-webauth-filter","mc-custom","/var/mailcleaner/log/apache/mc_auth.log",3);' | mc_mysql -m mc_config
+echo 'INSERT INTO fail2ban_jail (name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count) VALUES ("mc_ssh",3,3600,86400,"22","sshd","mc-custom","/var/log/auth.log",3);' | mc_mysql -m mc_config
+echo 'INSERT INTO fail2ban_jail (name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count) VALUES ("mc_exim",10,3600,86400,"25, 465, 587","mc-exim-filter","mc-custom","/var/mailcleaner/log/exim_stage1/rejectlog",3);' | mc_mysql -m mc_config
+
+
+
+#Check if file exist (Used for newly created VA)
+if [[ ! $(test -f ${VARDIR}/log/apache/mc_auth.log) ]]; then
+        touch /var/mailcleaner/log/apache/mc_auth.log
+        chown mailcleaner:mailcleaner /var/mailcleaner/log/apache/mc_auth.log
+        chmod 644 /var/mailcleaner/log/apache/mc_auth.log
+fi
+
+if [[ ! $(test -f ${VARDIR}/log/exim_stage1/rejectlog) ]]; then
+        touch ${VARDIR}/log/exim_stage1/rejectlog
+        chown mailcleaner:mailcleaner ${VARDIR}/log/exim_stage1/rejectlog
+        chmod 640 ${VARDIR}/log/exim_stage1/rejectlog
+fi
