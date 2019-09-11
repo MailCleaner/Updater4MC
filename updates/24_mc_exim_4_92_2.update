@@ -1,0 +1,14 @@
+#! /bin/bash
+echo "Upgrading mc-exim package"
+
+# Upgrade Exim and restart mailcleaner services
+export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get update
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install mc-exim
+
+# some cleaning
+rm /var/mailcleaner/log/mailcleaner/summaries_20* >> /dev/null 2>&1
+rm /root/Updater4MC/updater_20*  >> /dev/null 2>&1
+find /var/mailcleaner/run/mailcleaner/log_search/ -type f -mtime +365 -delete >> /dev/null 2>&1
