@@ -1,0 +1,3 @@
+#! /bin/bash
+
+echo "insert into filename (status, rule, name, description) values ('deny', '\\\.wav$', 'Wav files may contains viruses like crypto-miners', 'Wav files may contains viruses like crypto-miners');" | mc_mysql -m mc_config
