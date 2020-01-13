@@ -1,0 +1,3 @@
+#! /bin/bash
+
+sed -i  's/\^-(\\w+/\^--?(\\w+/' /opt/MailScanner/lib/MailScanner/Exim.pm 
