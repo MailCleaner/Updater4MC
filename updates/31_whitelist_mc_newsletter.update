@@ -1,0 +1,4 @@
+#! /bin/bash
+echo "Whitelist for MailCleaner newsletters"
+
+echo 'update trustedSources set domainsToSPF = concat (ifnull(domainsToSPF, ""), "\nmpdkim2.ch\nmailcleaner.net");' | /usr/mailcleaner/bin/mc_mysql -m mc_config
