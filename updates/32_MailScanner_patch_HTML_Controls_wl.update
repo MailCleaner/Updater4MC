@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Patch MailScanner to have a whitelist for HTML controls
+cd $rpath
+cp -f resources/HTML_wl.patch /opt/MailScanner/lib/MailScanner/
+cd /opt/MailScanner/lib/MailScanner/
+cp Message.pm Message.pm_HTML_controls
+patch -i HTML_wl.patch Message.pm
+rm -f HTML_wl.patch Message.pm
+cd $rpath
