@@ -5,4 +5,4 @@ apt-get update && sudo apt-get install --force-yes -y -o Dpkg::Options::="--forc
   libsqlite3-dev libncurses5-dev libncursesw5-dev tk-dev libffi-dev liblzma-dev
 
 chown mailcleaner:mailcleaner /usr/mailcleaner/install/install_pyenv.sh
-sudo -u mailcleaner /usr/mailcleaner/install/install_pyenv.sh >  /dev/null 2>&1 &
+sudo -u mailcleaner /usr/mailcleaner/install/install_pyenv_3-7-7.sh >  /dev/null 2>&1 &
