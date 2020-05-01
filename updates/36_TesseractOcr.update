@@ -1,0 +1,39 @@
+#!/bin/bash
+export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+SRCDIR=`grep 'SRCDIR' /etc/mailcleaner.conf | cut -d ' ' -f3`
+
+# Bonus: Throwing in opendmarc dependency libswitch-perl
+echo "Installing TesseractOcr binary and OpenCV dependency"
+apt-get update
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install tesseract-ocr libopencv-dev libswitch-perl
+
+echo "Installing TesseractOCR plugin"
+cd /root
+git clone https://github.com/MailCleaner/TesseractOcr.git
+cd TesseractOcr
+git checkout 3.00
+perl ./Makefile.PL INSTALLSITEARCH=/usr/local/share/perl/5.20.2
+make
+make install
+
+echo "Renaming DB column use_fuzzyocr to generic use_ocr"
+cat << EOF | ${SRCDIR}/bin/mc_mysql -m mc_config
+ALTER TABLE antispam CHANGE use_fuzzyocr use_ocr tinyint(1);
+EOF
+
+echo "Adding tocr_config table"
+cat << EOF | ${SRCDIR}/bin/mc_mysql -m mc_config
+CREATE TABLE IF NOT EXISTS tocr_config (preprocess tinyint, msg_timeout int, img_timeout int, skip_jpg tinyint, skip_png tinyint, skip_gif tinyint, skip_bmp tinyint, skip_tif tinyint, skip_pdf tinyint, min_size int, max_size int, min_x int, min_y int, max_x int, max_y int, min_area int, max_area int);
+EOF
+
+echo "Initializing tocr_config table"
+cat << EOF | ${SRCDIR}/bin/mc_mysql -m mc_config
+INSERT INTO tocr_config (preprocess, msg_timeout, img_timeout, skip_jpg, skip_png, skip_gif, skip_bmp, skip_tif, skip_pdf, min_size, max_size, min_x, min_y, max_x, max_y, min_area, max_area) VALUES (1, 15, 5, 0, 0, 0, 0, 0, 0, 1024, 4096000, 16, 16, 2048, 2048, 512, 2073600);
+EOF
+
+echo "Resyncing DB"
+/usr/mailcleaner/bin/resync_db.sh
+
+echo "Generating new config files"
+/usr/mailcleaner/bin/dump_mailscanner_config.pl
