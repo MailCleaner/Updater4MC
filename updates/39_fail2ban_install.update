@@ -3,6 +3,9 @@ export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/
 VARDIR="/var/mailcleaner"
 check_db.pl --update
 PYENV_VERSION=3.7.7
+if [ ! -f "/var/mailcleaner/log/mailcleaner/install_pyenv.log" ]; then
+  return 1
+fi
 if [ -f "/etc/mailcleaner.conf" ]; then
   master_raw=$(echo "SELECT hostname, password FROM master"| mc_mysql -s mc_config 2>&1)
   conf_arr=(MASTERIP MASTERPWD)
@@ -59,7 +62,7 @@ export PYENV_ROOT="/var/mailcleaner/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-su - mailcleaner -c "pip install mailcleaner-library --trusted-host repository.mailcleaner.net --index https://repository.mailcleaner.net/python/ --extra-index https://pypi.org/simple/"
+su - mailcleaner -c "pip install mailcleaner-library==1.0.2 --trusted-host repository.mailcleaner.net --index https://repository.mailcleaner.net/python/ --extra-index https://pypi.org/simple/"
 
 echo "3.7.7" > /root/.python-version
 source /root/.bashrc
