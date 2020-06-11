@@ -9,3 +9,4 @@ apt-get update
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install libperlio-gzip-perl
 
 set_version 2020 06 10 "Relay Summaries"
+echo "2020.06" > /usr/mailcleaner/etc/mailcleaner/version.def
