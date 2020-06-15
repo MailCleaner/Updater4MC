@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -f /var/mailcleaner/spool/updater/39_fail2ban_install ] && [ -f /var/mailcleaner/spool/updater/34_Pyenv-library-install-3-7-7 ]; then
+  su - mailcleaner -c "pip install mailcleaner-library -U --trusted-host repository.mailcleaner.net --index https://repository.mailcleaner.net/python/ --extra-index https://pypi.org/simple/" > /dev/null 2>&1
+fi 
+
 [ "$1" != "--noreboot" ] && "${SRCDIR}/etc/init.d/mailcleaner" restart
 
 /usr/mailcleaner/bin/check_db.pl -m --dbs=mc_config --update
