@@ -1,4 +1,0 @@
-#! /bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
- 
-cp /usr/mailcleaner/etc/exim/exim_stage1.conf_template /usr/mailcleaner/etc/exim/exim_stage1.conf_template_`date '+%Y-%m-%d'`
