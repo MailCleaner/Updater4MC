@@ -1,0 +1,5 @@
+#!/bin/bash
+export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+cd /usr/mailcleaner/
+git rm --force share/newsld/siteconfig/L_Dutch.cf
