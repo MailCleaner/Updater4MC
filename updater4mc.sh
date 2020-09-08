@@ -26,7 +26,11 @@
 CONFFILE=/etc/mailcleaner.conf
 STATUSFILE=/var/mailcleaner/spool/mailcleaner/updater4mc.status
 
-[ ! -f "$CONFFILE" ] && echo "Not a valid MailCleaner Installation: no conf file" && exit 1
+if [ ! -f "$CONFFILE" ]; then 
+  echo "Not a valid MailCleaner Installation: no conf file"
+  echo "Not a valid MailCleaner Installation: no conf file" > $STATUSFILE
+  exit 1
+fi
 
 HOSTID=`grep 'HOSTID' $CONFFILE | cut -d ' ' -f3`
 if [ "$HOSTID" = "" ]; then
