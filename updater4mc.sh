@@ -24,6 +24,7 @@
 #
 
 CONFFILE=/etc/mailcleaner.conf
+STATUSFILE=/var/mailcleaner/spool/mailcleaner/updater4mc.status
 
 [ ! -f "$CONFFILE" ] && echo "Not a valid MailCleaner Installation: no conf file" && exit 1
 
@@ -70,6 +71,7 @@ realpath rpath "$0"
 exec > >(tee -ai "${VARDIR}/log/mailcleaner/updater4mc.log")
 exec 2>&1
 
+echo "Running" > $STATUSFILE
 echo "$(date +%F_%T) Launching Updater4MC"
 
 cd "$rpath" && git fetch && git reset --hard @{u} && git pull
@@ -94,6 +96,7 @@ do
 	    touch "${VARDIR}/spool/updater/$(basename -s'.update' ${updtfile})"
 	elif [ $retcode -ne 1 ]; then
 	    echo -e "\tError during ${updtfile} update. Please join logfile to your post on MailCleaner Community forum."
+            echo "Failed to complete update $updtfile" > $STATUSFILE
 	    exit 1
 	fi
 	echo "End of update."
@@ -108,4 +111,5 @@ echo ">> All updates done ! Follow forum announces or relaunch this script regul
 echo ">> Logfile present here: ${VARDIR}/log/mailcleaner/updater4mc.log"
 echo
 
+rm $STATUSFILE
 exit 0
