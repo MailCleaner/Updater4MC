@@ -1,5 +1,7 @@
 #! /bin/bash
 
+export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 if [ ! -L /etc/init.d/fail2ban ]; then
  rm /etc/init.d/fail2ban
  ln -s /usr/mailcleaner/etc/init.d/fail2ban /etc/init.d/fail2ban
