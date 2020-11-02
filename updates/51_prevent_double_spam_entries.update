@@ -44,6 +44,6 @@ sed -i 's/"/`/g' /root/mc_spool_add_index.sql
 
 echo 'UPDATE fail2ban_conf SET chain="INPUT";' | /usr/mailcleaner/bin/mc_mysql -m mc_config
 
-/usr/mailcleaner/etc/init.d/fail2ban
+/usr/mailcleaner/etc/init.d/fail2ban restart
 
 rm /root/mc_spool_add_index.sql
