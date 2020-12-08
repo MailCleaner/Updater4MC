@@ -1,0 +1,45 @@
+--- Message_1.pm	2020-12-07 16:11:36.760027053 +0100
++++ Message.pm	2020-12-07 16:16:10.606486959 +0100
+@@ -6640,7 +6640,25 @@
+ 
+   # Pascal Rolle, MailCleaner to whitelist HTML controls
+   my $wl_HTML = '/var/mailcleaner/spool/tmp/mailscanner/whitelist_HTML';
+-  if ( -e $wl_HTML ) {
++  my $HTML_whitelisted = 0;
++  my @cidr;
++
++  foreach my $header_line (@{$this->{headers}}) {
++       if ( $header_line =~ /^X-MailCleaner-HTML-WL: Ok$/ ) {
++               $DisarmFormTag     = 0;
++               $DisarmScriptTag   = 0;
++               $DisarmCodebaseTag = 0;
++               $DisarmCodebaseTag = 0;
++               $DisarmIframeTag   = 0;
++               $DisarmWebBug      = 0;
++
++#               # Logging
++               MailScanner::Log::NoticeLog('Message '.$this->{id}." : the address ".$this->{clientip} ." is whitelisted for HTML controls", $this->{id});
++		$HTML_whitelisted = 1;
++       }
++  }
++  if ( ! $HTML_whitelisted ) {
++    if ( -e $wl_HTML ) {
+        # get information for the Body From
+        my $bf_addr = '';
+        foreach my $header_line (@{$this->{headers}}) {
+@@ -6690,6 +6708,7 @@
+                # Logging
+                MailScanner::Log::NoticeLog('Message '.$this->{id}." : the address $addr is whitelisted for HTML controls", $this->{id});
+        }
++    }
+   }
+   # End of HTML controls whitelist
+ 
+@@ -7979,6 +7998,7 @@
+     $message->{allreports}{""} = $report;
+     $message->{types}{""} = 'e'; # Error processing
+     $message->{alltypes}{""} = 'e'; # Error processing
++
+     $global::MS->{quar}->StoreInfections($message);
+ }
+
