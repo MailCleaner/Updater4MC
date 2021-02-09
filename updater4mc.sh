@@ -116,4 +116,5 @@ echo ">> Logfile present here: ${VARDIR}/log/mailcleaner/updater4mc.log"
 echo
 
 rm $STATUSFILE
+${SRCDIR}/scripts/cron/service_checks.pl
 exit 0
