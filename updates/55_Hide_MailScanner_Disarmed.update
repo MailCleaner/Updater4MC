@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+sed -ri 's/<MailScanner(Form|Script|Object|IFrame)\$\$/<MailScanner\1\$\$ style=\\"display: none;\\"/g' /opt/MailScanner/lib/MailScanner/Message.pm*
+set_version 2021 02 09 "MailScanner hide disarmed"
