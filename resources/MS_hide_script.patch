@@ -1,0 +1,83 @@
+--- Message.pm	2021-04-05 11:43:29.156858443 -0400
++++ Message.pm.fix	2021-04-05 12:34:05.954748996 -0400
+@@ -7250,19 +7250,24 @@
+   #print STDERR "DisarmText just added \"$text\"\n";
+ }
+ 
++our $DisarmInsideHead = 0;
++
+ # HTML::Parser callback function for start tags
+ sub DisarmTagCallback {
+   my($tagname, $text, $attr, $attrseq) = @_;
+ 
+-  #print STDERR "Disarming $tagname\n";
++  #MailScanner::Log::InfoLog("Disarming $tagname\n");
+ 
+   my $output = "";
+   my $webbugfilename;
+ 
+-  if ($tagname eq 'form' && $DisarmFormTag) {
++  if ($tagname eq 'head') {
++    $DisarmInsideHead = 1;
++    #MailScanner::Log::InfoLog("Entering head\n");
++  } elsif ($tagname eq 'form' && $DisarmFormTag) {
+     #print "It's a form\n";
+     $text = substr $text, 1;
+-    $output .= "<BR><MailScannerForm$$ " . $text;
++    $output .= "<BR><MailScannerForm$$ style=\"display: none;\" " . $text;
+     $DisarmDoneSomething{'form'} = 1;
+   } elsif ($tagname eq 'input' && $DisarmFormTag) {
+     #print "It's an input button\n";
+@@ -7288,11 +7293,11 @@
+     #print "It's an object\n";
+     if (exists $attr->{'codebase'}) {
+       $text = substr $text, 1;
+-      $output .= "<MailScannerObject$$ " . $text;
++      $output .= "<MailScannerObject$$ style=\"display: none;\" " . $text;
+       $DisarmDoneSomething{'object codebase'} = 1;
+     } elsif (exists $attr->{'data'}) {
+       $text = substr $text, 1;
+-      $output .= "<MailScannerObject$$ " . $text;
++      $output .= "<MailScannerObject$$ style=\"display: none;\" " . $text;
+       $DisarmDoneSomething{'object data'} = 1;
+     } else {
+       $output .= $text;
+@@ -7300,12 +7305,14 @@
+   } elsif ($tagname eq 'iframe' && $DisarmIframeTag) {
+     #print "It's an iframe\n";
+     $text = substr $text, 1;
+-    $output .= "<MailScannerIFrame$$ " . $text;
++    $output .= "<MailScannerIFrame$$ style=\"display: none;\" " . $text;
+     $DisarmDoneSomething{'iframe'} = 1;
+   } elsif ($tagname eq 'script' && $DisarmScriptTag) {
+     #print "It's a script\n";
+     $text = substr $text, 1;
+-    $output .= "<MailScannerScript$$ " . $text;
++    unless ($DisarmInsideHead) {
++      $output .= "<MailScannerScript$$ style=\"display: none;\" " . $text;
++    }
+     $DisarmDoneSomething{'script'} = 1;
+   } elsif ($tagname eq 'a' && $DisarmPhishing) {
+     #print STDERR "It's a link\n";
+@@ -7395,14 +7402,19 @@
+ sub DisarmEndtagCallback {
+   my($tagname, $text, $id) = @_;
+ 
+-  if ($tagname eq 'iframe' && $DisarmIframeTag) {
++  if ($tagname eq 'head') {
++    $DisarmInsideHead = 0;
++    #MailScanner::Log::InfoLog("Exitting head\n");
++  } elsif ($tagname eq 'iframe' && $DisarmIframeTag) {
+     print "</MailScannerIFrame$$>";
+     $DisarmDoneSomething{'iframe'} = 1;
+   } elsif ($tagname eq 'form' && $DisarmFormTag) {
+     print "</MailScannerForm$$>";
+     $DisarmDoneSomething{'form'} = 1;
+   } elsif ($tagname eq 'script' && $DisarmScriptTag) {
+-    print "</MailScannerScript$$>";
++    unless ($DisarmInsideHead) {
++      print "</MailScannerScript$$>";
++    }
+     $DisarmDoneSomething{'script'} = 1;
+   } elsif ($tagname eq 'map' && $DisarmAreaURL) {
+     # We are inside an imagemap that is part of a phishing imagemap
