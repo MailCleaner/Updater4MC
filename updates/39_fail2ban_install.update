@@ -26,6 +26,9 @@ else
   exit 1
 fi
 apt-get update && apt-get purge  --force-yes -y fail2ban && apt-get install --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" fail2ban
+cd /usr/mailcleaner
+git checkout -- /usr/mailcleaner/etc/init.d/fail2ban
+cd -
 
 echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-webauth",10,3600,86400,"80,443","mc-webauth-filter","mc-custom","/var/mailcleaner/log/apache/mc_auth.log",-1, 0);' | mc_mysql -m mc_config
 echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-ssh",3,3600,86400,"22","sshd","mc-custom","/var/log/auth.log",-1, 0);' | mc_mysql -m mc_config
