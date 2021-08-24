@@ -1,0 +1,32 @@
+#!/bin/bash
+
+export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+SRCDIR=$(grep 'SRCDIR' /etc/mailcleaner.conf | cut -d ' ' -f3)
+if [ "$SRCDIR" = "" ]; then
+  SRCDIR=/usr/mailcleaner
+fi
+
+
+UPDATE_FOLDER=/var/mailcleaner/spool/updater/
+UPDATE_FILES=("34_Pyenv-library-install-3-7-7" "39_fail2ban_install" "41_update_fail2ban" "50_fail2ban_fix" "56_fail2ban_default_chain" "65_pyenv_fix" "66_bashrc_file" )
+
+for file in "${UPDATE_FILES[@]}"; do
+    if ! test -f "$UPDATE_FOLDER$file"; then
+      echo "Fail2ban's previous update not completed, postponing this update to next run"
+      exit 1
+    fi
+done
+
+if ! test -f "/var/mailcleaner/log/mailcleaner/install_pyenv.log"; then
+   echo "MailCleaner's library is not yet installed, postponing this update to next run"
+   exit 1
+fi
+
+BRANCH=$(su - mailcleaner -c "cd /var/mailcleaner/.pyenv; git status|grep master")
+if [[ -z "$BRANCH" ]]
+then
+   echo "not in branch master... Fixing"
+   su - mailcleaner -c "cd /var/mailcleaner/.pyenv;git checkout master"
+fi
+su - mailcleaner -c "cd /var/mailcleaner/.pyenv; git pull; git checkout v2.0.4"
