@@ -9,4 +9,4 @@ fi
 
 echo "insert into prefilter values(NULL, 1, 'TrustedIPs', 1, 0, 1, 0, 'neg_decisive', 0, 0, 'X-TrustedIPs', 0, 0, 0);" | /usr/mailcleaner/bin/mc_mysql -m mc_config
 
-set_version 2021 10 27 "Make TrustedIPs always be decisive"
+set_version 2021 11 16 "Make TrustedIPs always be decisive"
