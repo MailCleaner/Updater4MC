@@ -78,8 +78,30 @@ exec 2>&1
 echo "Running" > $STATUSFILE
 echo "$(date +%F_%T) Launching Updater4MC"
 
-cd "$rpath" && git fetch && git reset --hard @{u} && git pull
+cd "$rpath" && git fetch && BRANCH=`git status | grep 'On branch' | sed -r 's/On branch //'`
+if [ "$BRANCH" != 'master' ]; then
+	echo "Abandoning update because Git tree at '$rpath' is not on 'master' branch."
+	exit 1
+fi
+
+git reset --hard @{u} && STATUS=`git pull`
+if [ "$STATUS" != 'Already up-to-date.' ]; then
+	echo "Abandoning update because Git tree at '$rpath' is blocking changes"
+	exit 1
+fi
+
 cd "${SRCDIR}" && "${SRCDIR}/lib/updates/gitupdate.sh"
+BRANCH=`git status | grep 'On branch' | sed -r 's/On branch //'`
+if [ "$BRANCH" != 'master' ]; then
+	echo "Abandoning update because Git tree at '$SRCDIR' is not on 'master' branch."
+	exit 1
+fi
+STATUS=`git pull`
+if [ "$STATUS" != 'Already up-to-date.' ]; then
+	echo "Abandoning update because Git tree at '$SRCDIR' is blocking changes"
+	exit 1
+fi
+
 
 [ ! -d "${VARDIR}/spool/updater" ] && mkdir "${VARDIR}/spool/updater"
 
