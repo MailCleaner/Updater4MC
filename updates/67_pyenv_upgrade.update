@@ -7,9 +7,17 @@ if [ "$SRCDIR" = "" ]; then
   SRCDIR=/usr/mailcleaner
 fi
 
-
 UPDATE_FOLDER=/var/mailcleaner/spool/updater/
 UPDATE_FILES=("34_Pyenv-library-install-3-7-7" "39_fail2ban_install" "41_update_fail2ban" "50_fail2ban_fix" "56_fail2ban_default_chain" "65_pyenv_fix" "66_bashrc_file" )
+
+if [[ ! $(echo "select * from fail2ban_jail" | ${SRCDIR}/bin/mc_mysql -s mc_config) ]]; then
+    echo "Reapplying fail2ban config for new installation";
+    echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-webauth",10,3600,86400,"80,443","mc-webauth-filter","mc-custom","/var/mailcleaner/log/apache/mc_auth.log",-1, 0);' | mc_mysql -m mc_config
+    echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-ssh",3,3600,86400,"22","sshd","mc-custom","/var/log/auth.log",-1, 0);' | mc_mysql -m mc_config
+    echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-exim",10,3600,86400,"25,465,587","mc-exim-filter","mc-custom","/var/mailcleaner/log/exim_stage1/rejectlog",-1, 0);' | mc_mysql -m mc_config
+    sysadmin=$(echo "SELECT sysadmin from system_conf;" | mc_mysql -s mc_config |tail -1)
+    echo 'INSERT INTO fail2ban_conf (src_email, src_name, dest_email) VALUES ("fail2ban@mailcleaner", "MailCleaner - Fail2Ban", "'${sysadmin}'");' | mc_mysql -m mc_config
+fi
 
 for file in "${UPDATE_FILES[@]}"; do
     if ! test -f "$UPDATE_FOLDER$file"; then
