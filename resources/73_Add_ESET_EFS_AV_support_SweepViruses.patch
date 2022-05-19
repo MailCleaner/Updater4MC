@@ -1,0 +1,66 @@
+--- /opt/MailScanner/lib/MailScanner/SweepViruses.pm	2017-05-09 13:42:44.000000000 +0200
++++ /opt/MailScanner/lib/MailScanner/SweepViruses.pm.new	2022-04-18 12:22:51.861255941 +0200
+@@ -471,6 +471,17 @@
+     SupportScanning	=> $S_SUPPORTED,
+     SupportDisinfect	=> $S_SUPPORTED,
+   },
++  "esetsefs"            => {
++    Name                => 'esetsefs',
++    Lock                => 'esetsefsBusy.lock',
++    CommonOptions       => '-s --profile="@In-depth scan"',
++    DisinfectOptions    => '',
++    ScanOptions         => '--readonly',
++    InitParser          => \&InitEsetsEFSParser,
++    ProcessOutput       => \&ProcessEsetsEFSOutput,
++    SupportScanning     => $S_SUPPORTED,
++    SupportDisinfect    => $S_SUPPORTED,
++  },
+   "vba32"		=> {
+     Name		=> 'vba32',
+     Lock		=> 'vba32Busy.lock',
+@@ -1586,6 +1597,11 @@
+   ;
+ }
+ 
++# Initialise any state variables the esets output parser uses
++sub InitEsetsEFSParser {
++  ;
++}
++
+ # Initialise any state variables the vba32 output parser uses
+ sub Initvba32Parser {
+   ;
+@@ -3667,6 +3683,33 @@
+   }
+ }
+ 
++sub ProcessEsetsEFSOutput {
++  use File::Basename;
++
++  my ($line, $infections, $types, $BaseDir, $Name) = @_;
++  chomp $line;
++
++  # return if line does not had threat
++  return 0 if $line !~ m/(?:retained|cleaned)/i;
++
++  my ($a, $b, $c, $d, $e, $f, $g, $h) = split(/,/, $line);
++
++  my ($fileuri) = $c;
++  my ($threat) = $d;
++  my ($info) = $e;
++  my ($action) = $f;
++
++  $fileuri =~ s/file:\/\/$BaseDir/\./;
++
++  my ($dot, $id, $part, @rest) = split(/\//, $fileuri);
++  my $file = substr($part,1);
++
++  my $report = "Esets: found $threat in $file";
++  $infections->{"$id"}{"$part"} .= $report . "\n";
++  $types->{"$id"}{"$part"} .= "v"; # it's a real virus
++  MailScanner::Log::InfoLog("Esets::INFECTED::$threat");
++  return 1;
++}
+ 
+ # Generate a list of all the virus scanners that are installed. It may
+ # include extras that are not installed in the case where there are
