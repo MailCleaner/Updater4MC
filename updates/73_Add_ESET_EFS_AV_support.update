@@ -104,6 +104,16 @@ cd -
 
 chmod +x /usr/mailcleaner/bin/watchdog/MC_mod_detect_license_EsetEFS.sh
 
+if [ -e /etc/sudoers.d/esetsefs-sudoers ]; then
+	echo "/etc/sudoers.d/esetsefs-sudoers already exists. Skipping."
+else
+	cat <<EOF > /etc/sudoers.d/esetsefs-sudoers
+mailcleaner ALL=(ALL) NOPASSWD: /opt/eset/efs/bin/odscan
+mailcleaner ALL=(ALL) NOPASSWD: /opt/eset/efs/bin/lslog
+EOF
+	echo "/etc/sudoers.d/esetsefs-sudoers added."
+fi
+
 if [[ ! $(echo "select id from scanner where name='esetsefs'" | /usr/mailcleaner/bin/mc_mysql -m mc_config) ]]; then
 	echo "insert into scanner values (NULL,'esetsefs','ESET EFS',0,'/opt/eset/efs/bin',0,'9.0','')" | /usr/mailcleaner/bin/mc_mysql -m mc_config
 fi
