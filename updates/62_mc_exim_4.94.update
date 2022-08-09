@@ -43,7 +43,7 @@ if [ ! -e "/usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.94" ] || [ ! -e
 fi
 
 MODIFIED=""
-if [[ "`md5sum /usr/mailcleaner/etc/exim/exim_stage1.conf_template | cut -d' ' -f1`" != "6a1b2882e874886163be36b514b7ead2" ]]; then
+if [[ "`md5sum /usr/mailcleaner/etc/exim/exim_stage1.conf_template | cut -d' ' -f1`" != "876e711cd9092d5c27c1a187f475b883" ]]; then
 	MODIFIED="/usr/mailcleaner/etc/exim/exim_stage1.conf_template"
 fi 
 if [ "`md5sum /usr/mailcleaner/etc/exim/exim_stage4.conf_template | cut -d' ' -f1`" != "a7984a4b079aa1a322d8a44b453cc7da" ]; then
