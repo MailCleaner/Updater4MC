@@ -25,7 +25,7 @@ VERSION=`/opt/exim4/bin/exim --version 2> /dev/null | grep "Exim version 4" | se
 if (( "$VERSION" >= "96" )); then
 	echo "Exim already at or above 4.96"
 	if [[ "$SOURCED" == 1 ]]; then
-		set_version 2022 09 09 "Exim 4.96"
+		set_version 2022 08 09 "Exim 4.96"
         	return 0
 	else
 		exit
@@ -92,6 +92,7 @@ if [[ $SOURCED == 0 ]]; then
 	fi
 else
 	if (( "$VERSION" >= "96" )); then
+	        set_version 2022 08 09 "Exim 4.96"
 		return 0
 	else
 		echo "Failed to install Exim 4.96"
