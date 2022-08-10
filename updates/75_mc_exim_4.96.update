@@ -22,7 +22,7 @@ echo "Upgrading mc-exim package to 4.96"
 
 VERSION=`/opt/exim4/bin/exim --version 2> /dev/null | grep "Exim version 4" | sed -r 's/.*4\.([0-9][0-9]).*/\1/'`
 
-if [[ "$VERSION" >= "96" ]]; then
+if [ $VERSION -ge 96 ]; then
 	echo "Exim already at or above 4.96"
 	if [[ "$SOURCED" == 1 ]]; then
 		set_version 2022 08 09 "Exim 4.96"
@@ -83,7 +83,7 @@ apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="
 VERSION=`/opt/exim4/bin/exim --version 2> /dev/null | grep "Exim version 4" | sed -r 's/.*4\.([0-9][0-9]).*/\1/'`
 
 if [[ $SOURCED == 0 ]]; then
-	if [[ "$VERSION" >= "96" ]]; then
+	if [ $VERSION -ge 96 ]]; then
 		echo "Upgrading and restarting MailCleaner\n"
         	/root/Updater4MC/updater4mc.sh
 	else
@@ -91,7 +91,7 @@ if [[ $SOURCED == 0 ]]; then
 		exit
 	fi
 else
-	if [[ "$VERSION" >= "96" ]]; then
+	if [ $VERSION >= 96 ]; then
 	        set_version 2022 08 09 "Exim 4.96"
 		return 0
 	else
