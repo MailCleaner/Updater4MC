@@ -78,7 +78,7 @@ EOF
 fi
 
 apt-get update
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install mc-exim=4.96
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" install mc-exim=4.96 pcre2
 
 VERSION=`/opt/exim4/bin/exim --version 2> /dev/null | grep "Exim version 4" | sed -r 's/.*4\.([0-9][0-9]).*/\1/'`
 
