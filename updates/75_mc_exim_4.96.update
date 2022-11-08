@@ -71,7 +71,7 @@ Please port your modifications to version of each of these files ending in '_4.9
 
 Once you are statisfied with the state of the '_4.96' templates run the following to force this update:
 
-  bash /root/Updater4MC/updates/62_mc_exim_4.96.update --force
+  bash /root/Updater4MC/updates/75_mc_exim_4.96.update --force
 EOF
 	return 1
 	exit
