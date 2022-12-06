@@ -14,4 +14,4 @@ if [[ "`dpkg -l | grep mc-clamav | sed -r 's/ii\s*mc-clamav\s*([0-9\.]+).*/\1/'`
 	return 0
 fi
 
-set_version 2022 02 28 "ClamAV 0.103.7"
+set_version 2022 12 06 "ClamAV 0.103.7"
