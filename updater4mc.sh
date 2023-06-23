@@ -131,6 +131,12 @@ do
     fi
 done
 . "${rpath}/updates/tolaunch.always" $1
+
+VERSION=$(echo "SELECT id FROM update_patch ORDER BY id DESC LIMIT 1" | /usr/mailcleaner/bin/mc_mysql -s mc_config | perl -e 'my ($id, $VERSION) = <STDIN>; $VERSION =~ s/(\d{4})(\d{2}).*/$1.$2/; print $VERSION')
+if grep -Pxq "\d\d\d\d\.\d\d" <<<$(echo $VERSION); then
+    echo $VERSION > ${SRCDIR}/etc/mailcleaner/version.def
+fi
+
 echo
 echo "$(date +%F_%T) End of Updater4MC:"
 echo ">> All updates done ! Follow forum announces or relaunch this script regularly."

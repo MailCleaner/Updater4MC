@@ -25,7 +25,6 @@ function set_version {
         exit 1
     fi
 
-    echo "$year.$month" > ${SRCDIR}/etc/mailcleaner/version.def
     version_id="${year}${month}${day}01"
     if [[ ! $(echo "select id from update_patch where id=$version_id" | ${SRCDIR}/bin/mc_mysql -s mc_config) ]]; then
         echo "insert into update_patch (id, date, time, status, description) values ( $version_id, '$year-$month-$day', '12:00:00', 'OK', '$year.$month $version_txt' )" | ${SRCDIR}/bin/mc_mysql -s mc_config
