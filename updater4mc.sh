@@ -96,12 +96,20 @@ if [ "$BRANCH" != 'master' ]; then
 	echo "Abandoning update because Git tree at '$SRCDIR' is not on 'master' branch."
 	exit 1
 fi
+# Clean up files that have been removed
+for i in $(git status | grep 'deleted by us:' | cut -d: -f 2); do
+	git rm $i
+done
 STATUS=`git pull`
+# Unless there were no changes
 if [ "$STATUS" != 'Already up-to-date.' ]; then
-	echo "Abandoning update because Git tree at '$SRCDIR' is blocking changes"
-	exit 1
+	STATUS=`git status | head -n 2 | tail -n 1`
+	# Unless those changes were successfully applied
+	if [ "$STATUS" != "Your branch is up-to-date with 'origin/master'." ]; then
+		echo "Abandoning update because Git tree at '$SRCDIR' is blocking changes"
+		exit 1
+	fi
 fi
-
 
 [ ! -d "${VARDIR}/spool/updater" ] && mkdir "${VARDIR}/spool/updater"
 
