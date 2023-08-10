@@ -17,5 +17,3 @@ EOF
     apt-get --allow-unauthenticated update 2>&1 >/dev/null
     apt-get --allow-unauthenticated -f install 2>&1 >/dev/null
 fi
-
-set_version 2023 08 10 "Update Apt archives"
