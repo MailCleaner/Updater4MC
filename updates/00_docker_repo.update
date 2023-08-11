@@ -4,7 +4,7 @@ export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/
 
 apt-get --allow-unauthenticated install -y apt-transport-https 2>&1 >/dev/null
 curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - >/dev/null
-if [ !-d /etc/apt/sources.list.d ]; then
+if [[ ! -d /etc/apt/sources.list.d ]]; then
     mkdir /etc/apt/sources.list.d
 fi
 sed -i '/docker/d' /etc/apt/sources.list
