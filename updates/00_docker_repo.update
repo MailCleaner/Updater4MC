@@ -1,0 +1,14 @@
+#!/bin/bash
+
+export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/mailcleaner/.pyenv"
+
+apt-get --allow-unauthenticated install -y apt-transport-https 2>&1 >/dev/null
+curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - >/dev/null
+if [ !-d /etc/apt/sources.list.d ]; then
+    mkdir /etc/apt/sources.list.d
+fi
+sed -i '/docker/d' /etc/apt/sources.list
+cat << EOF > /etc/apt/sources.list.d/docker.list
+deb [arch=amd64] https://download.docker.com/linux/debian jessie stable
+EOF
+apt-get --allow-unauthenticated update 2>&1 >/dev/null

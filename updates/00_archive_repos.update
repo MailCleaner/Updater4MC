@@ -2,7 +2,6 @@
 
 export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/mailcleaner/.pyenv"
 
-curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - >/dev/null
 if [[ "$(grep archive.debian.org /etc/apt/sources.list)" == '' ]]; then
     echo "Updating Repositories to use Archives"
     mv /etc/apt/sources.list /etc/apt/sources.list.deprecated
@@ -11,7 +10,6 @@ deb http://archive.debian.org/debian/ jessie main contrib non-free
 deb-src http://archive.debian.org/debian/ jessie main contrib non-free
 deb http://archive.debian.org/debian-security/ jessie/updates main contrib non-free
 deb-src http://archive.debian.org/debian-security/ jessie/updates main contrib non-free
-deb [arch=amd64] https://download.docker.com/linux/debian jessie stable
 deb http://cdnmcpool.mailcleaner.net jessie main
 EOF
     apt-get --allow-unauthenticated update 2>&1 >/dev/null
