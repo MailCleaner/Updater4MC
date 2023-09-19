@@ -17,6 +17,7 @@ then
    echo "not in branch master... Fixing"
    su - mailcleaner -c "cd /var/mailcleaner/.pyenv;git checkout master"
 fi
+pyenv global 3.7.7
 
 echo "Updating Pyenv..."
 su - mailcleaner -c "cd /var/mailcleaner/.pyenv; git pull; git checkout v2.0.4"
