@@ -79,7 +79,6 @@ echo "Running" > $STATUSFILE
 echo "$(date +%F_%T) Launching Updater4MC"
 
 cd "$rpath"
-UPDSTART=$(git log --decorate=no -n 1 | head -n 1 | cut -d' ' -f2)
 git fetch && BRANCH=`git status | grep 'On branch' | sed -r 's/On branch //'`
 if [ "$BRANCH" != 'master' ]; then
 	echo "Abandoning update because Git tree at '$rpath' is not on 'master' branch."
@@ -91,7 +90,6 @@ if [ "$STATUS" != 'Already up-to-date.' ]; then
 	echo "Abandoning update because Git tree at '$rpath' is blocking changes"
 	exit 1
 fi
-UPDEND=$(git log --decorate=no -n 1 | head -n 1 | cut -d' ' -f2)
 
 cd "${SRCDIR}"
 SRCSTART=$(git log --decorate=no -n 1 | head -n 1 | cut -d' ' -f2)
@@ -127,6 +125,7 @@ do
 done
 
 UPDATED=0
+VERSION=0
 for updtfile in $(find $rpath"/updates/" -type f -name "*.update" |sort |uniq)
 do
     if [ ! -e "${VARDIR}/spool/updater/$(basename -s'.update' ${updtfile})" ]; then
@@ -136,6 +135,7 @@ do
 	if [ $retcode -eq 0 ]; then
 	    touch "${VARDIR}/spool/updater/$(basename -s'.update' ${updtfile})"
             UPDATED=1
+            VERSION=`echo $updtfile | sed 's/^.*\/\([0-9]*\)_[^\/]*$/\1/'`
 	elif [ $retcode -ne 1 ]; then
 	    echo -e "\tError during ${updtfile} update. Please join logfile to your post on MailCleaner Community forum."
             echo "Failed to complete update $updtfile" > $STATUSFILE
@@ -143,15 +143,16 @@ do
 	fi
 	echo "End of update."
     else
+        VERSION=`echo $updtfile | sed 's/^.*\/\([0-9]*\)_[^\/]*$/\1/'`
 	echo "Already updated: $updtfile ..."
     fi
 done
 
-if [[ $UPDSTART != $UPDEND ]] || [[ $SRCSTART != $SRCEND ]] || [[ $UPDATED == 1 ]]; then
+if [[ $SRCSTART != $SRCEND ]] || [[ $UPDATED == 1 ]]; then
     . "${rpath}/updates/tolaunch.always" $1
 fi
 
-echo $(echo ${UPDEND} | cut -b-7).$(echo ${SRCEND} | cut -b-7) > ${SRCDIR}/etc/mailcleaner/version.def
+echo $(echo $VERSION)-$(echo ${SRCEND} | cut -b-7) > ${SRCDIR}/etc/mailcleaner/version.def
 
 echo
 echo "$(date +%F_%T) End of Updater4MC:"
