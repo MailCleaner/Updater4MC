@@ -92,7 +92,7 @@ if [ "$STATUS" != 'Already up-to-date.' ]; then
 fi
 
 cd "${SRCDIR}"
-SRCSTART=$(git log --decorate=no -n 1 | head -n 1 | cut -d' ' -f2)
+SRCSTART=$(git log --no-merges --decorate=no -n 1 | head -n 1 | cut -d' ' -f2)
 ${SRCDIR}/lib/updates/gitupdate.sh
 BRANCH=`git status | grep 'On branch' | sed -r 's/On branch //'`
 if [ "$BRANCH" != 'master' ]; then
@@ -113,7 +113,7 @@ if [ "$STATUS" != 'Already up-to-date.' ]; then
 		exit 1
 	fi
 fi
-SRCEND=$(git log --decorate=no -n 1 | head -n 1 | cut -d' ' -f2)
+SRCEND=$(git log --no-merges --decorate=no -n 1 | head -n 1 | cut -d' ' -f2)
 
 [ ! -d "${VARDIR}/spool/updater" ] && mkdir "${VARDIR}/spool/updater"
 
