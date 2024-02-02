@@ -35,7 +35,7 @@ fi
 /usr/mailcleaner/bin/resync_db.sh
 
 echo "Generating new Fail2Ban configurations..."
-$SRCDIR/bin/dump_firewall.py
+$SRCDIR/bin/dump_firewall.pl
 dump_fail2ban_config.py
 
 echo "Reloading Fail2Ban..."
