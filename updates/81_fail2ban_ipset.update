@@ -15,7 +15,7 @@ fi
 /usr/mailcleaner/bin/check_db.pl --update
 /usr/mailcleaner/bin/check_db.pl --myrepair
 echo "Reapplying fail2ban config for new installation";
-echo 'DELETE * from fail2ban_jail' | mc_mysql -m mc_config
+echo 'DELETE from fail2ban_jail' | mc_mysql -m mc_config
 echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-webauth-1d",5,3600,86400,"80,443","mc-webauth-filter","mc-ipset","/var/mailcleaner/log/apache/mc_auth.log",-1, 0);' | mc_mysql -m mc_config
 echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-ssh-1d",3,3600,86400,"22","sshd","mc-ipset","/var/log/auth.log",-1, 0);' | mc_mysql -m mc_config
 echo 'INSERT INTO fail2ban_jail (enabled,name,maxretry,findtime,bantime,port,filter,banaction,logpath,max_count,send_mail_bl) VALUES (0,"mc-exim-1d",5,3600,86400,"25,465,587","mc-exim-filter","mc-ipset","/var/mailcleaner/log/exim_stage1/rejectlog",-1, 0);' | mc_mysql -m mc_config
