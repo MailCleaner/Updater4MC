@@ -84,7 +84,7 @@ Please port your modifications to version of each of these files ending in '_4.9
 
 Once you are statisfied with the state of the '_4.97' templates run the following to force this update:
 
-  bash /root/Updater4MC/updates/75_mc_exim_4.97.1.update --force
+  bash /root/Updater4MC/updates/86_mc_exim_4.97.1.update --force
 EOF
 	return 1
 	exit
