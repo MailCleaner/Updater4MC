@@ -56,7 +56,7 @@ fi
 /usr/mailcleaner/bin/check_db.pl -s --dbs=mc_spool --myrepair
 
 MODIFIED=""
-if [[ "`md5sum /usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.96 | cut -d' ' -f1`" != "bfe383a80ce19b951b5fff084604224a" ]]; then
+if [[ "`md5sum /usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.96 | cut -d' ' -f1`" != "8f08fb5fc787a88bb13f91d6ed38b1de" ]]; then
 	MODIFIED="/usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.96"
 fi 
 if [ "`md5sum /usr/mailcleaner/etc/exim/exim_stage4.conf_template_4.96 | cut -d' ' -f1`" != "ac170013c7c59f73f54d8bf57a6cc7fd" ]; then
