@@ -18,9 +18,9 @@ function check_version() {
         fi
     fi
     IMPORT_MC_VERSION=$(su - mailcleaner -c 'cd /var/mailcleaner/.pyenv; shims/pip3 show mailcleaner-library' | grep Version | cut -d' ' -f2)
-    if [[ ! "$IMPORT_MC_VERSION" < "1.1.4" ]]; then
+    if [[ ! "$IMPORT_MC_VERSION" < "1.1.5" ]]; then
         echo "Already up-to-date"
-        set_version 2024 01 25 "mailcleaner-library 1.1.4"
+        set_version 2024 05 16 "mailcleaner-library 1.1.5"
         return 0
     fi
 }
