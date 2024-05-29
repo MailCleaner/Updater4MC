@@ -33,6 +33,7 @@ fi
 cd /var/mailcleaner/.pyenv
 check_version
 
+chown mailcleaner:mailcleaner /var/mailcleaner/log/Network.log
 su - mailcleaner -c "/var/mailcleaner/.pyenv/shims/pip3 install --upgrade mailcleaner-library -U --trusted-host repository.mailcleaner.net --index https://repository.mailcleaner.net/python/ --extra-index https://pypi.org/simple/"
 
 FINAL=1
