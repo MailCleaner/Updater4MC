@@ -43,14 +43,14 @@ if [ ! -e "/usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.98" ] || [ ! -e
 fi
 
 MODIFIED=""
-if [[ "`md5sum /usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.97 | cut -d' ' -f1`" != "3f31f855f07c4366dbf7bfc44d2ed8e2" ]]; then
+if [[ "`md5sum /usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.97 | cut -d' ' -f1`" != "fa62f07fb6369c54c09cfcb83055b017" ]]; then
 	MODIFIED="/usr/mailcleaner/etc/exim/exim_stage1.conf_template_4.97"
 fi 
-if [ "`md5sum /usr/mailcleaner/etc/exim/exim_stage4.conf_template_4.97 | cut -d' ' -f1`" != "fa62f07fb6369c54c09cfcb83055b017" ]; then
+if [ "`md5sum /usr/mailcleaner/etc/exim/exim_stage4.conf_template_4.97 | cut -d' ' -f1`" != "b25a2ac729405905e485f67e1434ae8d"  ]; then
 	MODIFIED="$MODIFIED
 /usr/mailcleaner/etc/exim/exim_stage4.conf_template_4.97"
 fi 
-if [ "`md5sum /usr/mailcleaner/etc/exim/stage1/ldap_callout_template_4.97 | cut -d' ' -f1`" != "b25a2ac729405905e485f67e1434ae8d" ]; then
+if [ "`md5sum /usr/mailcleaner/etc/exim/stage1/ldap_callout_template_4.97 | cut -d' ' -f1`" != "3f31f855f07c4366dbf7bfc44d2ed8e2" ]; then
 	MODIFIED="$MODIFIED
 /usr/mailcleaner/etc/exim/stage1/ldap_callout_template_4.97"
 fi 
