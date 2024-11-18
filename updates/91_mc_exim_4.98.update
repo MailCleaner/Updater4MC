@@ -18,6 +18,19 @@ if [[ "$SOURCED" == 0 ]] && [[ "$FORCE" != "--force" ]]; then
 	exit
 fi
 
+echo "Updating database to accomadate longer Exim IDs"
+ISMASTER=`grep 'ISMASTER' /etc/mailcleaner.conf | cut -d ' ' -f3`
+if [ "$ISMASTER" = "Y" ] || [ "$ISMASTER" = "y" ]; then
+	/usr/mailcleaner/etc/init.d/mysql_master start
+	/usr/mailcleaner/bin/mc_mysql -m mc_spool </usr/mailcleaner/install/dbs/t_sp_spam.sql
+	/usr/mailcleaner/bin/check_db.pl -m --dbs=mc_spool --update
+	/usr/mailcleaner/bin/check_db.pl -m --dbs=mc_spool --myrepair
+fi
+/usr/mailcleaner/etc/init.d/mysql_slave start
+/usr/mailcleaner/bin/mc_mysql -s mc_spool </usr/mailcleaner/install/dbs/t_sp_spam.sql
+/usr/mailcleaner/bin/check_db.pl -s --dbs=mc_spool --update
+/usr/mailcleaner/bin/check_db.pl -s --dbs=mc_spool --myrepair
+
 echo "Upgrading mc-exim package to 4.98"
 
 VERSION=$(echo `/opt/exim4/bin/exim --version 2> /dev/null | grep "Exim version 4" | sed -r 's/.*4\.([0-9][0-9])(\.)?([0-9])?.*/\1\3/'`00 | cut -c -3)
