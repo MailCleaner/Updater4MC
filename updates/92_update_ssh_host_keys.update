@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ "$(sha256sum /etc/ssh/ssh_host_dsa_key | cut -d ' ' -f 1)" == "322ccaf54b5169334405c54c1e00edebfa0ca8b67c53603d3af523ae978c81f4" ]]; then
+	echo "Disabling default DSA key"
+	mv /etc/ssh/ssh_host_dsa_key /etc/ssh/.ssh_host_dsa_key.old
+	mv /etc/ssh/ssh_host_dsa_key.pub /etc/ssh/.ssh_host_dsa_key.pub.old
+fi
+if [[ "$(sha256sum /etc/ssh/ssh_host_rsa_key | cut -d ' ' -f 1)" == "cf9a7e0cffbc7235b288da3ead2b71733945fe6c773e496f85a450781ef4cf33" ]]; then
+	echo "Disabling default RSA key"
+	mv /etc/ssh/ssh_host_rsa_key /etc/ssh/.ssh_host_rsa_key.old
+	mv /etc/ssh/ssh_host_rsa_key.pub /etc/ssh/.ssh_host_rsa_key.pub.old
+fi
+if [[ "$(sha256sum /etc/ssh/ssh_host_ed25519_key | cut -d ' ' -f 1)" == "da41b256dc70344f06bdb6d74245688a941633b5d312aca10895c4f997f35884" ]]; then
+	echo "Disabling default ED25519 key"
+	mv /etc/ssh/ssh_host_ed25519_key /etc/ssh/.ssh_host_ed25519_key.old
+	mv /etc/ssh/ssh_host_ed25519_key.pub /etc/ssh/.ssh_host_ed25519_key.pub.old
+fi
+
+/usr/bin/ssh-keygen -A
+
+if [[ ! -e /etc/ssh/ssh_host_dsa_key ]]; then
+	echo "Failed to generate DSA key"
+	return 1
+elif [[ ! -e /etc/ssh/ssh_host_rsa_key ]]; then
+	echo "Failed to generate RSA key"
+	return 1
+elif [[ ! -e /etc/ssh/ssh_host_ed25519_key ]]; then
+	echo "Failed to generate ED25519 key"
+	return 1
+else
+	set_version 2024 11 18 "Rotate SSH host keys"
+	return 0
+fi
