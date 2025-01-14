@@ -1,6 +1,0 @@
-#! /bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
- 
-rm /usr/mailcleaner/etc/exim/exim_stage1.conf_template
-cd /usr/mailcleaner/
-git checkout etc/exim/exim_stage1.conf_template

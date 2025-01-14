@@ -1,2 +1,0 @@
-/usr/mailcleaner/bin/check_db.pl -m --dbs=mc_config --update
-/usr/mailcleaner/bin/resync_db.sh

@@ -1,8 +1,0 @@
-#!/bin/bash
-
-if [[ ${ISMASTER} == "Y" ]]; then
-    ${SRCDIR}/bin/internal_access --generate --propagate --install
-else
-    sleep 120
-    ${SRCDIR}/bin/internal_access --install
-fi

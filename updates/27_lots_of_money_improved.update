@@ -1,3 +1,0 @@
-#! /bin/bash
-
-sed -i "s/d.,\\\sOo/d.,'\\\sOo/" /var/lib/spamassassin/3.004000/updates_spamassassin_org/72_active.cf

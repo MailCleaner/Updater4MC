@@ -1,6 +1,0 @@
-#! /bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-cd /usr/mailcleaner
-rm bin/watchdog/watchdogs_report.sh
-git checkout bin/watchdog/watchdogs_report.sh

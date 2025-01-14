@@ -1,5 +1,0 @@
-#!/bin/bash
-
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-set_version 2021 01 26 "Whitelists first"

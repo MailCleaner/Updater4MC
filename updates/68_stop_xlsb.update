@@ -1,7 +1,0 @@
-#!/bin/bash
-
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-echo "insert into filename (status, rule, name, description) values ('deny', '\\\.xlsb$', '', 'binary excel file');" | /usr/mailcleaner/bin/mc_mysql -m mc_config
-
-set_version 2021 11 02 "Stopping a wave of offensive files"

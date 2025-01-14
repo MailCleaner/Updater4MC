@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sed -i 's|url = git@github\.com:MailCleaner/MailCleaner\.git|url = https://github.com/MailCleaner/MailCleaner.git|g' "${SRCDIR}/.git/config"
