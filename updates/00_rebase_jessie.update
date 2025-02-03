@@ -19,14 +19,16 @@ if [[ "$DEBIAN" < 8 ]]; then
 elif [[ "$DEBIAN" == 8 ]]; then
     echo "Your MailCleaner appliance is running Debian Jessie and will be switched to the Updater4MC8 repository for future updates."
     cd /root/Updater4MC
-    sed -i "s/\/Updater4MC.git/\/Updater4MC8.git/" .git/config
-    git pull --rebase origin master
+    git remote set-url origin https://github.com/MailCleaner/MailCleaner8.git
+    git stash -a
+    git pull
     if [[ $? ]]; then
-	echo "Rebase command returned an error. Please check to see if you are correctly using https://github.com/MailCleaner/Updater4MC8"
+	echo "Rebasing on new repository failed. Please check to see if you are correctly using https://github.com/MailCleaner/Updater4MC8"
 	return 1
     fi
     set_version 2025 02 04 "Change repository (Updater4MC8)" 
-    nohup eval $(sleep 10 /root/Updater4MC/updater4mc.sh)
+    echo "Completed successfully. Will re-run updater4mc.sh in 1 minute in the background. You will see this in /var/mailcleaner/log/mailcleaner/updater4mc.log"
+    nohup sh -c 'sleep 10 && /root/Updater4MC/updater4mc.sh >>/var/mailcleaner/log/mailcleaner/updater4mc.log' &
     return 0
 else
     echo "Your MailCleaner machine is already newer than Debian Jessie and does not need to change repositories."
