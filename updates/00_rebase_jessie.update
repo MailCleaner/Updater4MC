@@ -15,13 +15,20 @@ fi
 DEBIAN=$(cat /etc/debian_version | cut -d '.' -f 1)
 if [[ "$DEBIAN" < 8 ]]; then
     echo "You are on a deprecated version of MailCleaner which is incompatible with Updater4MC. Please make a fresh installation and migrate your data."
-    return 0
+    return 1
 elif [[ "$DEBIAN" == 8 ]]; then
     echo "Your MailCleaner appliance is running Debian Jessie and will be switched to the Updater4MC8 repository for future updates."
     cd /root/Updater4MC
     sed -i "s/\/Updater4MC.git/\/Updater4MC8.git/" .git/config
     git pull --rebase origin master
+    if [[ $? ]]; then
+	echo "Rebase command returned an error. Please check to see if you are correctly using https://github.com/MailCleaner/Updater4MC8"
+	return 1
+    fi
+    set_version 2025 02 04 "Change repository (Updater4MC8)" 
+    nohup eval $(sleep 10 /root/Updater4MC/updater4mc.sh)
+    return 0
 else
     echo "Your MailCleaner machine is already newer than Debian Jessie and does not need to change repositories."
-    return 1
+    return 0
 fi
