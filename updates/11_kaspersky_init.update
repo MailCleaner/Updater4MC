@@ -1,4 +1,0 @@
-#!/bin/bash
-if [[ -z $(git -C ${SRCDIR} ls-files | grep -e "etc/init.d/kaspersky") ]]; then
-    rm -f ${SRCDIR}/etc/init.d/kaspersky
-fi

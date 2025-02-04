@@ -1,8 +1,0 @@
-#!/bin/bash
-
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-
-echo "update fail2ban_conf set chain='INPUT' where chain <> 'FORWARD'" | /usr/mailcleaner/bin/mc_mysql -m mc_config
-
-set_version 2021 02 25 "fail2ban default chain"

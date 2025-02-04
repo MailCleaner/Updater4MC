@@ -1,4 +1,0 @@
-#! /bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-sed -i 's/.*Updater4MC\/updater4mc.sh.*\&1.*/30 22 \* \* \*  \/root\/Updater4MC\/updater4mc.sh >\/dev\/null 2>\&1/' /var/spool/cron/crontabs/root

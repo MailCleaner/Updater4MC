@@ -1,4 +1,0 @@
-#! /bin/bash
-echo "Whitelist for MailCleaner newsletters"
-
-echo "update mta_config set ciphers='ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2'" | /usr/mailcleaner/bin/mc_mysql -m mc_config

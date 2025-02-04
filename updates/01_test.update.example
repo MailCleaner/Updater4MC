@@ -1,6 +1,0 @@
-#!/bin/bash
-
-echo This is a test
-# return 0 to create a flag file (update already executed)
-# return 1 to not create the flag (update failure)
-

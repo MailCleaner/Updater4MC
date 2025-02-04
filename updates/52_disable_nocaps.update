@@ -1,5 +1,0 @@
-#!/bin/bash
-
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-echo "update domain_pref set reject_capital_domain=0" | /usr/mailcleaner/bin/mc_mysql -m mc_config

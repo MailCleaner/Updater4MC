@@ -1,4 +1,0 @@
-#! /bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-sed -i 's/CONF_TYPE_DURATIION/CONF_TYPE_DURATION/' /usr/local/share/perl/5.20.2/Mail/SpamAssassin/Plugin/Razor2.pm

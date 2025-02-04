@@ -1,8 +1,0 @@
-#! /bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-apt-get update && sudo apt-get install --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confmiss" aria2 git wget curl xz-utils \
-  make build-essential llvm libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
-  libsqlite3-dev libncurses5-dev libncursesw5-dev tk-dev libffi-dev liblzma-dev
-
-chown mailcleaner:mailcleaner /usr/mailcleaner/install/install_pyenv_3-7-7.sh
-sudo -u mailcleaner /usr/mailcleaner/install/install_pyenv_3-7-7.sh >  /dev/null 2>&1 &

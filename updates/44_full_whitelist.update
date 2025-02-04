@@ -1,5 +1,0 @@
-
-#! /bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
- 
-touch /var/mailcleaner/spool/mailcleaner/full_whitelisted_senders.list

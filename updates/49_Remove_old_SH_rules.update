@@ -1,7 +1,0 @@
-#!/bin/bash
-export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-words='__RCVD_IN_ZEN RCVD_IN_SBL RCVD_IN_XBL RCVD_IN_PBL URIBL_SBL URIBL_DBL_SPAM URIBL_DBL_REDIR URIBL_DBL_ERROR';
-for i in $words ; do
-	sed -i "/$i/d" /var/lib/spamassassin/3.004000/updates_spamassassin_org/* ;
-done

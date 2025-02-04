@@ -1,0 +1,36 @@
+#!/bin/bash
+
+export PATH="/usr/mailcleaner/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/mailcleaner/.pyenv/bin"
+
+SRCDIR=$(grep 'SRCDIR' /etc/mailcleaner.conf | cut -d ' ' -f3)
+if [ "$SRCDIR" = "" ]; then
+	SRCDIR=/usr/mailcleaner
+fi
+
+VARDIR=$(grep 'VARDIR' /etc/mailcleaner.conf | cut -d ' ' -f3)
+if [ "$VARDIR" = "" ]; then
+	VARDIR=/var/mailcleaner
+fi
+
+DEBIAN=$(cat /etc/debian_version | cut -d '.' -f 1)
+if [[ "$DEBIAN" < 8 ]]; then
+    echo "You are on a deprecated version of MailCleaner which is incompatible with Updater4MC. Please make a fresh installation and migrate your data."
+    return 1
+elif [[ "$DEBIAN" == 8 ]]; then
+    echo "Your MailCleaner appliance is running Debian Jessie and will be switched to the Updater4MC8 repository for future updates."
+    cd /root/Updater4MC
+    git remote set-url origin https://github.com/MailCleaner/Updater4MC8.git
+    git reset --hard c5f1e17
+    git pull
+    if [[ $? -ne 0 ]]; then
+	echo "Rebasing on new repository failed. Please check to see if you are correctly using https://github.com/MailCleaner/Updater4MC8"
+	return 1
+    fi
+    set_version 2025 02 04 "Change repository (Updater4MC8)" 
+    echo "Completed successfully. Will re-run updater4mc.sh in 1 minute in the background. You will see this in /var/mailcleaner/log/mailcleaner/updater4mc.log"
+    nohup sh -c 'sleep 10 && /root/Updater4MC/updater4mc.sh >>/var/mailcleaner/log/mailcleaner/updater4mc.log' &
+    return 0
+else
+    echo "Your MailCleaner machine is already newer than Debian Jessie and does not need to change repositories."
+    return 0
+fi
