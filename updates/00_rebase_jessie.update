@@ -28,7 +28,7 @@ elif [[ "$DEBIAN" == 8 ]]; then
     fi
     set_version 2025 02 04 "Change repository (Updater4MC8)" 
     echo "Completed successfully. Will re-run updater4mc.sh in 5 minute in the background. You will see this in /var/mailcleaner/log/mailcleaner/updater4mc.log"
-    nohup sh -c 'sleep 300 && /root/Updater4MC/updater4mc.sh >>/var/mailcleaner/log/mailcleaner/updater4mc.log' &
+    nohup sh -c 'sleep 300 && /root/Updater4MC/updater4mc.sh >/dev/null' &
     return 0
 else
     echo "Your MailCleaner machine is already newer than Debian Jessie and does not need to change repositories."
