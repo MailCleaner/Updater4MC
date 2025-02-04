@@ -20,7 +20,7 @@ elif [[ "$DEBIAN" == 8 ]]; then
     echo "Your MailCleaner appliance is running Debian Jessie and will be switched to the Updater4MC8 repository for future updates."
     cd /root/Updater4MC
     git remote set-url origin https://github.com/MailCleaner/Updater4MC8.git
-    git stash -a
+    git reset --hard c5f1e17
     git pull
     if [[ $? -ne 0 ]]; then
 	echo "Rebasing on new repository failed. Please check to see if you are correctly using https://github.com/MailCleaner/Updater4MC8"
