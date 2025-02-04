@@ -12,6 +12,9 @@ if [ "$VARDIR" = "" ]; then
 	VARDIR=/var/mailcleaner
 fi
 
+echo Deferring update
+return 1
+
 DEBIAN=$(cat /etc/debian_version | cut -d '.' -f 1)
 if [[ "$DEBIAN" < 8 ]]; then
     echo "You are on a deprecated version of MailCleaner which is incompatible with Updater4MC. Please make a fresh installation and migrate your data."
