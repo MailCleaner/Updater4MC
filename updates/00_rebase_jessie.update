@@ -22,7 +22,7 @@ elif [[ "$DEBIAN" == 8 ]]; then
     git remote set-url origin https://github.com/MailCleaner/Updater4MC8.git
     git stash -a
     git pull
-    if [[ $? ]]; then
+    if [[ $? -ne 0 ]]; then
 	echo "Rebasing on new repository failed. Please check to see if you are correctly using https://github.com/MailCleaner/Updater4MC8"
 	return 1
     fi
